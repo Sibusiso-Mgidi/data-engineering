@@ -1,8 +1,7 @@
 {
-  
-    "host" : "localhost",
-    "port" : 3306,
-    "user" : "root",
-    "passwd" : "Toh3mu3j",
-    "db" : "moviesdb"
+    "host_name" : "localhost",
+    "port_number" : 3306,
+    "user_name" : "root",
+    "token" : "Toh3mu3j",
+    "database_name" : "moviesdb"
 }
