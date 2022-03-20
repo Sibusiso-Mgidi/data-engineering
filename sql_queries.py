@@ -36,6 +36,7 @@ class CreateTables(object):
                     "PRIMARY KEY(movie_id)"
                     ")"
                     )
+
         cur.close()
         conn.close()
 
@@ -137,5 +138,49 @@ class CreateTables(object):
                 "FOREIGN KEY(company_id) REFERENCES mdb.production_companies(company_id)"
                 ")"
                 )
+
         cur.close()
         conn.close()
+
+    def create_production_countries_tbl(self, conn, cur):
+        """
+        This method creates production countries table.
+        """
+
+        # drop the table if already exists.
+        cur.execute("DROP TABLE IF EXISTS production_countries")
+    
+        # Create 'production_countries' table
+        cur.execute("CREATE TABLE production_countries("
+                "country_id VARCHAR(10),"
+                "country_name VARCHAR(100),"
+                "PRIMARY KEY(country_id)"
+                ")"
+                )
+
+        cur.close()
+        conn.close()
+
+    
+    def create_movies_countries_tbl(self, conn, cur):
+        """
+        This method creates movies countries table.
+        """
+
+        # drop the table if already exists.
+        cur.execute("DROP TABLE IF EXISTS movies_countries")
+    
+        # create 'movie_countries' table
+        cur.execute("CREATE TABLE movie_countries("
+                "movie_country_id INT,"
+                "movie_id INT,"
+                "country_id VARCHAR(10),"
+                "PRIMARY KEY(movie_country_id),"
+                "FOREIGN KEY(movie_id) REFERENCES mdb.movies(movie_id),"
+                "FOREIGN KEY(country_id) REFERENCES mdb.production_countries(country_id)"
+                ")"
+                )
+
+        cur.close()
+        conn.close()
+
