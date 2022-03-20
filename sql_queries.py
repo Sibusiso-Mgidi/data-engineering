@@ -57,3 +57,45 @@ class CreateTables(object):
 
         cur.close()
         conn.close()
+
+    def create_movie_keyword_tbl(self, conn, cur):
+        """
+        This method creates the movie_keyword table
+        """
+
+        # drop the table if already exists
+        cur.execute("DROP TABLE IF EXISTS movie_keyword")
+
+        # create 'movie_genre' table
+        cur.execute("CREATE TABLE movie_genre("
+                "movie_genre_id INT,"
+                "movie_id INT,"
+                "genre_id INT,"
+                "PRIMARY KEY(movie_genre_id),"
+                "FOREIGN KEY(movie_id) REFERENCES mdb.movies(movie_id),"
+                "FOREIGN KEY(genre_id) REFERENCES mdb.genre(genre_id)"
+                ")"
+                )
+
+        cur.close()
+        conn.close()
+
+
+    def create_keyword_tbl(self, conn, cur):
+        """
+        This method creates the keyworde table
+        """
+        
+        # drop the table if already exists
+        cur.execute("DROP TABLE IF EXISTS keyword")
+
+        # create 'keyword' table
+        cur.execute("CREATE TABLE mdb.keyword("
+                "keyword_id INT,"
+                "keyword_name VARCHAR(100),"
+                "PRIMARY KEY(keyword_id)"
+                ")"
+                )
+
+        cur.close()
+        conn.close()
