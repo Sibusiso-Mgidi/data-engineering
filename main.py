@@ -3,8 +3,6 @@ __version__ = "1.0.0"
 __email__ = "mgiditercy@gmail.com"
 __status__ = "Development"
 
-
-
 from etl import *
 
 with open("config.json") as config_file:
