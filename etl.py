@@ -28,15 +28,3 @@ class MoviedDB():
         cur = conn.cursor()
 
         return conn, cur
-
-
-
-with open("config.json") as config_file:
-    # get database login credintials.
-    data = json.load(config_file)
-
-# get an automated database object 
-    moviesdb_object = MoviedDB(data)
-    conn, cur =  moviesdb_object.get_establish_connection()
-    
-    
