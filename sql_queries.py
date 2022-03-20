@@ -99,3 +99,43 @@ class CreateTables(object):
 
         cur.close()
         conn.close()
+
+
+    def create_production_companies_tbl(self, conn, cur):
+        """
+        This method creates movie companies table.
+        """
+        # drop the table if already exists
+        cur.execute("DROP TABLE IF EXISTS production_companies")
+
+        # create 'production_companies' table
+        cur.execute("CREATE TABLE production_companies("
+                "company_id INT,"
+                "company_name VARCHAR(100),"
+                "PRIMARY KEY(company_id)"
+                ")"
+                )
+
+        cur.close()
+        conn.close()
+
+    def create_movie_companies_tbl(self, conn, cur):
+        """
+        This method creates movies companies table.
+        """
+
+        # drop the table if already exists.
+        cur.execute("DROP TABLE IF EXISTS movie_companies")
+        
+        # Create 'movie_companies' table
+        cur.execute("CREATE TABLE movie_companies("
+                "movie_companies_id INT,"
+                "movie_id INT,"
+                "company_id INT,"
+                "PRIMARY KEY(movie_companies_id),"
+                "FOREIGN KEY(movie_id) REFERENCES mdb.movies(movie_id),"
+                "FOREIGN KEY(company_id) REFERENCES mdb.production_companies(company_id)"
+                ")"
+                )
+        cur.close()
+        conn.close()
