@@ -184,3 +184,46 @@ class CreateTables(object):
         cur.close()
         conn.close()
 
+    
+    def create_spoken_language_tbl(self, conn, cur):
+        """
+        This method creates spoken language table.
+        """
+
+        # drop the table if already exists.
+        cur.execute("DROP TABLE IF EXISTS spoken_languages")
+    
+        # create 'spoken_languages' table
+        cur.execute("CREATE TABLE spoken_languages("
+                    "language_id VARCHAR(10),"
+                    "language_name VARCHAR(100),"
+                    "PRIMARY KEY(language_id)"
+                    ")"
+                    )
+
+        cur.close()
+        conn.close()
+
+
+    def create_movie_languages_tbl(self, conn, cur):
+        """
+        This method creates movies language table.
+        """
+
+        # drop the table if already exists
+        cur.execute("DROP TABLE IF EXISTS movie_languages")
+
+
+        # create 'movie_languages' table
+        cur.execute("CREATE TABLE movie_languages("
+                "movie_lang_id INT,"
+                "movie_id INT,"
+                "language_id VARCHAR(10),"
+                "PRIMARY KEY(movie_lang_id),"
+                "FOREIGN KEY(movie_id) REFERENCES mdb.movies(movie_id),"
+                "FOREIGN KEY(language_id) REFERENCES mdb.spoken_languages(language_id)"
+                ")"
+                )
+
+        cur.close()
+        conn.close()
