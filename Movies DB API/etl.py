@@ -1,4 +1,3 @@
-import re
 import pandas as pd
 import requests
 import json
@@ -35,6 +34,32 @@ class MoviesETLPipeline(object):
 
         return df
 
+    def get_transform(self, df):
+        """
+        This is a method for structuring the raw data from the source.
+        """
+
+        df_columns = ['budget', 'genres', 'id', 'imdb_id', 'original_title', 'release_date', 'revenue', 'runtime']
+        genres_list = df['genres'].tolist()
+        
+        # here we expand this column out so we can easily see and make use of the internal records.
+        flat_list = [item for sublist in genres_list for item in sublist]
+        
+        # the idea: we want to create a separate table for genres and a column of lists to explode out.
+        result = []
+        for l in genres_list:
+            r = []
+            for d in l:
+                r.append(d['name'])
+            result.append(r)
+        df = df.assign(genres_all = result)
+        
+        # here we create the genres table.
+        df_genres = pd.DataFrame.from_records(flat_list).drop_duplicates()
+        
+        return df_genres
+
+
 if __name__ == "__main__":
 
     with open("config.json") as config_file:
@@ -46,11 +71,12 @@ if __name__ == "__main__":
 
     # call the extract  method to source 3rd party data.
     df =  api_object.get_extract()
-    print(df)
+
+    # call the transform method
+    transformed_df = api_object.get_transform(df)
+    print(transformed_df)
 
 
-
-    
 
 
 
